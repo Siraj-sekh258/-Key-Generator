@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HACKER API GENERATOR</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            color: #0f0;
+            text-align: center;
+            overflow: hidden;
+            background: black;
+        }
+
+        /* ভিডিও ব্যাকগ্রাউন্ড */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* শিরোনাম */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: lime;
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 0px 0px 10px lime;
+            animation: hackerLights 2s infinite alternate;
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            padding: 20px;
+            text-shadow: 0px 0px 10px #0f0;
+        }
+
+        /* RGB Matrix Effect */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* টেক্সট ডিজাইন */
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            text-shadow: 0px 0px 10px red, 0px 0px 20px blue, 0px 0px 30px lime;
+            animation: rgbEffect 1.5s infinite alternate;
+        }
+
+        /* বোতামের ডিজাইন */
+        button {
+            background-color: black;
+            color: lime;
+            border: 2px solid lime;
+            padding: 12px 25px;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 30px; /* হালকা রাউন্ড */
+            transition: 0.3s;
+            margin-top: 20px;
+            text-shadow: 0px 0px 10px lime;
+            box-shadow: 0px 0px 20px lime;
+            animation: glow 1s infinite alternate;
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        button:hover {
+            background-color: lime;
+            color: black;
+            box-shadow: 0px 0px 30px lime;
+        }
+
+        /* Typing & Up-Down Effect */
+        @keyframes upDown {
+            0% { transform: translateY(0px); color: red; }
+            50% { transform: translateY(10px); color: darkred; }
+            100% { transform: translateY(0px); color: red; }
+        }
+
+        #typing {
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 80px;
+            text-shadow: 0px 0px 10px red;
+            animation: upDown 1s infinite ease-in-out;
+        }
+
+        /* RGB Light Animation */
+        @keyframes rgbEffect {
+            0% { text-shadow: 0px 0px 10px red; }
+            50% { text-shadow: 0px 0px 20px blue; }
+            100% { text-shadow: 0px 0px 30px lime; }
+        }
+
+        /* Button Glow Effect */
+        @keyframes glow {
+            0% { box-shadow: 0px 0px 20px lime; }
+            100% { box-shadow: 0px 0px 40px lime; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ভিডিও ব্যাকগ্রাউন্ড -->
+    <video autoplay muted loop class="video-bg">
+        <source src="hacker.mp4" type="video/mp4">
+        আপনার ব্রাউজার ভিডিও সাপোর্ট করে না।
+    </video>
+
+    <!-- ব্যাকগ্রাউন্ড মিউজিক -->
+    <audio id="hackerAudio">
+        <source src="hacker_sound.mp3" type="audio/mp3">
+        আপনার ব্রাউজার অডিও সাপোর্ট করে না।
+    </audio>
+
+    <!-- হেডার -->
+    <div class="header">BLACKHAT HACKER</div>
+
+    <!-- টাইপিং + আপডাউন টেক্সট -->
+    <p id="typing"></p>
+
+    <!-- API Key Generator -->
+    <button onclick="fetchData()">KEY</button>
+    <p id="result">FAST BOMBER</p>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <script>
+        // Typing Effect
+        const text = "WELCOME TO MY HACKING ";
+        let index = 0;
+
+        function typeEffect() {
+            if (index < text.length) {
+                document.getElementById("typing").textContent += text[index];
+                index++;
+                setTimeout(typeEffect, 200);
+            }
+        }
+
+        typeEffect();
+
+        function fetchData() {
+            fetch("https://bhai4you.com/hsalf/generate.php") // আপনার API লিংক দিন
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("result").innerText = "চাবি: " + data;
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+                document.getElementById("result").innerText = "ত্রুটি! পুনরায় চেষ্টা করুন।";
+            });
+        }
+
+        // অডিও স্বয়ংক্রিয়ভাবে চালু রাখতে ব্যবহারকারী ক্লিক করলেই চালু হবে
+        document.body.addEventListener("click", function() {
+            document.getElementById("hackerAudio").play();
+        });
+
+        // Matrix Effect
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = "010101010101010101";
+        const matrix = letters.split("");
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "rgb(" + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 255 + ")";
+            ctx.font = fontSize + "px monospace";
+
+            drops.forEach((y, index) => {
+                const text = matrix[Math.floor(Math.random() * matrix.length)];
+                const x = index * fontSize;
+                ctx.fillText(text, x, y * fontSize);
+
+                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[index] = 0;
+                drops[index]++;
+            });
+        }
+        setInterval(drawMatrix, 50);
+    </script>
+
+</body>
+</html>
